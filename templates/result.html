@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <style>
+        /* 가장 높은 확률의 항목에 적용할 스타일 */
+        .highlight {
+            background-color: #ffdd57; /* 노란색 배경 */
+        }
+    </style>
+</head>
+<body>
+    <h1>Prediction Result</h1>
+    
+    <!-- 업로드한 이미지 표시 -->
+    <h2>Uploaded Image:</h2>
+    <img src="{{ url_for('static', filename='uploads/' + image_file) }}" alt="Uploaded Image" style="max-width:300px;">
+    
+    <!-- 예측 결과를 확률 높은 순서대로 표시 -->
+    <h2>Predicted Expressions (Sorted by Probability):</h2>
+    <table border="1">
+        <tr>
+            <th>Expression</th>
+            <th>Probability</th>
+        </tr>
+        {% for probability, category in predictions %}
+        <tr {% if probability == predictions[0][0] %} class="highlight" {% endif %}>
+            <td>{{ category }}</td>
+            <td>{{ probability * 100 | round(2) }}%</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="{{ url_for('index') }}">Upload another image</a>
+</body>
+</html>
