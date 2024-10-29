@@ -83,4 +83,5 @@ def upload_file():
     return jsonify({'results': results, 'image': img_str})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # 배포 환경에서는 debug 옵션을 False로 설정하고, 호스트와 포트를 지정하는 것이 좋습니다.
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=False)
